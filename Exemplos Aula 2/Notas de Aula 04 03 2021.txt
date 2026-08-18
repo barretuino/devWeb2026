@@ -1,0 +1,24 @@
+Notas de Aula 19/02/2024
+
+https://github.com/barretuino/devWeb2022
+Aula 2
+
+http://localhost:8080/pjAula2/index.html
+
+https://keenthemes.com/metronic
+
+- Desenvolvimento utilizando uma linguagem Interpretada
+
+- Desenvolvimento WEB
+	- Front-end (HTML, CSS) - Apresentação (Lado Client)
+	- Back-end - Camada de Regra de Negócio. Normalmente emprega linguagem de programação compilada.
+
+- Linguagem HTML ela adota o sistema de tags
+	<> Abre
+	    ... Conteúdo
+	</> Fecha
+	
+		
+- Request: Requisições (enviando informações no sentido de requisitar/informar algo)
+
+- Response: Retorno / Resposta de um serviço executado no servidor e devolvido ao client
