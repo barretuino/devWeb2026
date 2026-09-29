@@ -1,0 +1,200 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  const MeuApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login UNISAL',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const TelaLogin(),
+    );
+  }
+}
+
+class TelaLogin extends StatefulWidget {
+  const TelaLogin({super.key});
+
+  @override
+  State<TelaLogin> createState() => _TelaLoginState();
+}
+
+class _TelaLoginState extends State<TelaLogin> {
+  final _formKey = GlobalKey<FormState>();
+
+  // Controladores para capturar o texto dos campos
+  final _usuarioController = TextEditingController();
+  final _senhaController = TextEditingController();
+
+  // Dados estáticos de acesso
+  final String _usuarioCorreto = 'Admin';
+  final String _senhaCorreta = 'UNISAL';
+
+  bool _ocultarSenha = true;
+
+  void _autenticar() {
+    if (_formKey.currentState!.validate()) {
+      final usuarioDigitado = _usuarioController.text.trim();
+      final senhaDigitada = _senhaController.text;
+
+      // Validação com dados fixos
+      if (usuarioDigitado == _usuarioCorreto && senhaDigitada == _senhaCorreta) {
+        // Redireciona para a tela inicial limpando a pilha de navegação
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TelaHome(usuario: usuarioDigitado),
+          ),
+        );
+      } else {
+        // Exibe mensagem de erro caso os dados estejam incorretos
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuário ou senha incorretos!'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _usuarioController.dispose();
+    _senhaController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.lock_outline,
+                  size: 80,
+                  color: Colors.blue,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Acesso ao Sistema',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                
+                // Campo Usuário
+                TextFormField(
+                  controller: _usuarioController,
+                  decoration: const InputDecoration(
+                    labelText: 'Usuário',
+                    prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Informe o usuário';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                
+                // Campo Senha
+                TextFormField(
+                  controller: _senhaController,
+                  obscureText: _ocultarSenha,
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _ocultarSenha ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _ocultarSenha = !_ocultarSenha;
+                        });
+                      },
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe a senha';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 24),
+                
+                // Botão Entrar
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _autenticar,
+                    child: const Text(
+                      'ENTRAR',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Tela de Destino após o Login
+class TelaHome extends StatelessWidget {
+  final String usuario;
+
+  const TelaHome({super.key, required this.usuario});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Página Inicial'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              // Retorna para a tela de login
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const TelaLogin()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Text(
+          'Bem-vindo, $usuario!',
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
