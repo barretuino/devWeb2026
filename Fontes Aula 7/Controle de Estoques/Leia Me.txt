@@ -1,0 +1,9 @@
+/controle_estoque
+├── index.php           # Tela principal para listar produtos
+├── adicionar_produto.php # Formulário para adicionar novos produtos
+├── salvar_produto.php  # Script PHP para processar e salvar no banco
+├── editar_produto.php    # Formulário para editar produtos existentes
+├── css/
+│   └── style.css       # Estilos da aplicação
+└── js/
+    └── scripts.js      # Funções JavaScript (opcional, para validação ou interatividade)
