@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			var nome = prompt("Informe seu nome");
+			
+			alert("Seja bem vindo " + nome);			
+		</script>
+	</head>
+	<body>
+		<h1>Conteúdo da Página</h1>
+		<p id="conteudo">Exemplo</p>
+		<script type="text/javascript">		
+			document.getElementById("conteudo").innerHTML = nome;
+		</script>
+	</body>
+</html>
