@@ -1,0 +1,10 @@
+<!-- Exemplo de Navbar unificada para o projeto -->
+<nav class="navbar">
+    <h2>Sistema de Estoque</h2>
+    <div>
+        <a href="produtos.php" style="color: var(--primary); margin-right: 15px; font-weight: 600;">Produtos</a>
+        <a href="usuarios.php" style="color: var(--primary); margin-right: 15px; font-weight: 600;">Usuários</a>
+        <span>Olá, <strong><?= htmlspecialchars($_SESSION['usuario_nome']) ?></strong></span> | 
+        <a href="logout.php">Sair</a>
+    </div>
+</nav>
